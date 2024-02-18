@@ -1,1 +1,3 @@
 LoginFormBackend/db.sqlite3
+LoginFormBackend/user_management/__pycache__
+LoginFormBackend/form_maker/migrations

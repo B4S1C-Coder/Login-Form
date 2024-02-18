@@ -1,0 +1,10 @@
+body {
+    background-color: rgb(180, 200, 235);
+   border-style:solid;
+   border-width:5px;
+   
+   border-top-color: black;
+   border-bottom-color: black;
+   border-left-color: blue;
+   border-right-color: blue;
+  }
