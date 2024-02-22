@@ -13,4 +13,6 @@ def  index(request):
         print(Name)
         print(Rollno)
         print(Branch)
+        print(image)
+        return redirect('/')
     return render(request,"index.html")
