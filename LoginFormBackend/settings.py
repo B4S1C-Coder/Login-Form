@@ -40,10 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
-    'corsheaders',
-    'user_management'
+    'corsheaders'
 ]
-EXTERNAL_APPS=['form_maker']
+EXTERNAL_APPS=['form_maker','user_management']
 
 INSTALLED_APPS+=EXTERNAL_APPS
 
