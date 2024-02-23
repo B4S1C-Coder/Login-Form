@@ -1,7 +1,9 @@
 from django.db import models
 
-# Create your models here.
-
+# Suggestion: Maybe create a config.py file for this app and store BRANCH_CHOICES
+# there. This is to increase readability as number of branches increases. Also it
+# might be better and possibly more efficient to NOT HAVE BRANCH_CHOICES as an
+# attribute of the Form class.
 class Form(models.Model):
     BRANCH_CHOICES = [('COE','Computer Engineering'),
         ('CSE', 'Computer Science and Engineering'),

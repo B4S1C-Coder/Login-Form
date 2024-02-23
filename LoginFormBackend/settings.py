@@ -42,9 +42,13 @@ INSTALLED_APPS = [
     'knox',
     'corsheaders'
 ]
-EXTERNAL_APPS=['form_maker','user_management']
+EXTERNAL_APPS=[
+    'form_maker',
+    'user_management',
+    'api_form_maker',
+]
 
-INSTALLED_APPS+=EXTERNAL_APPS
+INSTALLED_APPS += EXTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
