@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from form_maker.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index,name="index"),
+    path('', include('form_maker.urls')),
     path('api_form_maker/', include('api_form_maker.urls')),
 ]
