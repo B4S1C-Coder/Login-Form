@@ -5,3 +5,5 @@ form_maker/migrations
 form_maker/__pycache__
 api_form_maker/__pycache__
 api_form_maker/migrations
+form_output/__pycache__
+form_output/migrations
