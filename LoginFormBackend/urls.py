@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('form_maker.urls')),
     path('api_form_maker/', include('api_form_maker.urls')),
+    path('form_output/',include('form_output.urls')),
 ]
