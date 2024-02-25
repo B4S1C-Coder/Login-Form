@@ -1,10 +1,10 @@
 db.sqlite3
-/api_form_maker/__pycache__/
-/api_form_maker/migrations/
-/form_maker/__pycache__/
-/form_maker/migrations/
-/form_output/__pycache__/
-/form_output/migrations/
-/user_management/__pycache__/
-/user_management/migrations/
+api_form_maker/__pycache__/
+api_form_maker/migrations/
+form_maker/__pycache__/
+form_maker/migrations/
+form_output/__pycache__/
+form_output/migrations/
+user_management/__pycache__/
+user_management/migrations/
 
