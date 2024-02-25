@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 
 # Create your views here.
 def output(request):
-    return render(request, 'output.html')
+    fields = ['name']
+    return render(request,'test.html',fields)
