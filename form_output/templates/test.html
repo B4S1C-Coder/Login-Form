@@ -1,14 +1,50 @@
-<form class="col s12" id="dataForm" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="row">
-    {% for field in feilds %}
-    <div class="input-field col s12">
-      <input name="{{ field }}" id="{{ field}}" type="text" class="validate" />
-      <label for="{{ field }}">{{ field }}</label>
+<div class="container">
+  <h3>Student Registration Form</h3>
+  <p>
+    {{content}}
+  </p>
+  <form class="col s12" id="dataForm"  method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="row">
+      {% for field in feilds %}
+      <div class="input-field col s12">
+        <input name="{{ field }}" id="{{ field}}" type="text" class="validate" />
+        <label for="{{ field }}">{{ field }}</label>
+      </div>
+      {% endfor %}
+
+      <div class="input-field col s12">
+        <select name="gender" id="gender">
+          <option value="" disabled selected>Choose your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <label>Gender</label>
+      </div>
+
+      <!-- Category Selection Dropdown -->
+      <div class="input-field col s12">
+        <select name="category" id="category">
+          <option value="" disabled selected>Choose your category</option>
+          <option value="Thapar Student">Thapar Student</option>
+          <option value="Non Thapar Student">Non Thapar Student</option>
+          <!-- <option value="Not a Student">Not a Student</option> -->
+        </select>
+        <label>Category</label>
+      </div>
     </div>
-    {% endfor %}
+
+    <!-- Thapar Student Form -->
+    
+
+    <!-- Submit Button -->
     <button class="btn waves-effect waves-light" type="submit" name="action">
       Submit
       <i class="material-icons right">send</i>
     </button>
-</form>
+
+  </form>
+</div>
+<div class="center-align">
+  <img src="static/assets/images/footer.png" class="responsive-img" style="height: 45vh" />
+</div>

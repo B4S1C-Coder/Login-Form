@@ -4,10 +4,10 @@ from django.shortcuts import render,HttpResponse,redirect
 def output(request):
     if request.method=="POST":
         data=request.POST
-        Name=data.get('Name')
-        print(Name)
+        content=data.get('Name')
+        print(content)
         return redirect('/form_output/')
     # querryset=form_maker.Form.objects.all()
     # context={'feilds':querryset}
-    context={'feilds':["Name","Age","email","Phone"]}
+    context={'feilds':["Name","Age","Email","Phone"],'content':"this the content that will be displayed"}
     return render(request, 'test.html', context)
