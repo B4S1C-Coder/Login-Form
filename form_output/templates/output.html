@@ -17,7 +17,7 @@
     }
 
     body {
-      background-image: url('form_output/static/images/bg.webp');
+      background-image: url({{bg_link}});
       background-size: cover;
       background-color: rgba(0, 0, 0, 0.6);
       background-blend-mode: color;
@@ -93,7 +93,7 @@
 <body>
   <div class="center-align">
     <div class="row imageBox">
-      <img src="static/images/header.png" class="responsive-img col s12 l4 m8 offset-l4 offset-m3" />
+      <img src=/static/assets/images/header.png class="responsive-img col s12 l4 m8 offset-l4 offset-m3" />
     </div>
   </div>
 
@@ -122,20 +122,6 @@
           </select>
           <label>Gender</label>
         </div>
-  
-        <!-- Category Selection Dropdown -->
-        <div class="input-field col s12">
-          <select name="category" id="category">
-            <option value="" disabled selected>Choose your category</option>
-            <option value="Thapar Student">Thapar Student</option>
-            <option value="Non Thapar Student">Non Thapar Student</option>
-            <!-- <option value="Not a Student">Not a Student</option> -->
-          </select>
-          <label>Category</label>
-        </div>
-      </div>
-  
-      <!-- Thapar Student Form -->
       
   
       <!-- Submit Button -->
@@ -148,144 +134,11 @@
   </div>
 
   <!-- Initialize Materialize CSS components -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      M.AutoInit();
-    });
-
-    // Show/hide the appropriate category form based on user selection
-    const selectCategory = () => {
-      const category = document.getElementById("category").value;
-      document
-        .querySelectorAll(".category-form")
-        .forEach((form) => form.classList.add("hide"));
-      if (!category.length) return;
-      document.getElementById(category).classList.remove("hide");
-    };
-
-
-    // Add an event listener to the category selection input
-    document
-      .getElementById("category")
-      .addEventListener("change", selectCategory);
-    selectCategory(); // Initialize based on the default selection
-
-    const form = document.getElementById("dataForm");
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      console.log("Form submitted");
-      const formData = new FormData(form);
-      submitFormData(formData);
-    });
-
-    async function submitFormData(formData) {
-      try {
-        const response = await fetch("https://climathon.goincop2.workers.dev/", {
-          method: "POST",
-          body: formData,
-        });
-
-        const res = await response.json();
-        console.log(res);
-
-        if (res.error) {
-          M.toast({ html: "Error: " + res.error, classes: "bold-toast red" });
-        } else {
-          M.toast({
-            html: "Form submitted successfully",
-            classes: "bold-toast green",
-          });
-          document.getElementById("dataForm").reset();
-        }
-      } catch (error) {
-        // Handle error
-        M.toast({
-          html: "Error: " + error.message,
-          classes: "bold-toast red",
-        });
-      }
-    }
-
-    async function startImageFieldsInit() {
-      const imageFields = ["studentIdUrl", "ssPaymentUrl"];
-      //const imageFields = ["studentIdUrl", "govIdUrl", "ssPaymentUrl"];
-      for (const field of imageFields) {
-        const fileInput = document.getElementById(field);
-        fileInput.addEventListener("change", async (event) => {
-          if (fileInput.files.length > 0) {
-            const progressElement = document.getElementById(
-              `${field}Progress`
-            );
-            try {
-              const imageUrl = await uploadImage(
-                fileInput.files[0],
-                progressElement
-              );
-              // formData.set(field, imageUrl);
-              document.getElementById(field + "Link").value = imageUrl;
-            } catch (error) {
-              M.toast({
-                html: `Error uploading ${field}: ${error.message}`,
-                classes: "bold-toast red",
-              });
-              return;
-            }
-          }
-        });
-      }
-    }
-
-    startImageFieldsInit();
-
-    const imgbbApiKey = "e87add19a429b1c60823e9800546e67b";
-
-    // Define ImgBB API endpoint
-    const imgbbEndpoint = "https://api.imgbb.com/1/upload";
-
-    // Function to upload an image and return the image URL
-    const uploadImage = async (file, progressElement) => {
-      return new Promise((resolve, reject) => {
-        progressElement.classList.remove("hide");
-
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", imgbbEndpoint, true);
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const progress = (event.loaded / event.total) * 100;
-            progressElement.style.width = `${progress}%`;
-          }
-        };
-
-        xhr.onload = () => {
-          progressElement.classList.add("hide");
-
-          if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            resolve(response.data.url);
-          } else {
-            reject(new Error("Image upload failed"));
-          }
-        };
-
-        xhr.onerror = () => {
-          reject(new Error("Image upload failed"));
-        };
-
-        const formData = new FormData();
-        formData.append("key", imgbbApiKey);
-        formData.append("image", file);
-
-        xhr.send(formData);
-      });
-    };
-  </script> -->
 
   <hr />
 
   <div class="center-align">
-    <img src="footer.png" class="responsive-img" style="height: 45vh" />
+    <img src=/static/assets/images/footer.png class="responsive-img" style="height: 45vh" />
   </div>
 
   <div id="error-modal" class="modal">
@@ -308,7 +161,7 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
     </div>
   </div>
-  <script src="/worker.js"></script>
+  <script src=/static/assets/javascript/worker.js></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
