@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 
 # Django REST imports
 from rest_framework.views import APIView
@@ -8,20 +10,47 @@ from rest_framework import status
 from rest_framework.response import Response
 from knox.auth import TokenAuthentication
 
-from .serializers import HTMLContentSerializer
-from .models import *
+from .serializers import FormMetaDataSerializer
+from .models import FormMetaData
 
-class FormMakerDashboardView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+class FormMakerInterfaceView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request=request, template_name="form_maker/dashboard.html")
 
-    def get(self, request, format=None):
-        data = HTMLContentSerializer(data={
-            "content": f"<h1>Logged In: {self.request.user.username}</h1>"
-        })
-        if data.is_valid():
-            return Response(data.data, status=status.HTTP_200_OK)
-        return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
+# MEANT TO BE USED BY THE FRONTEND ONLY
+class InterfaceFormCreationDataAPIView(APIView):
+
+    def post(self, request):
+        # check if user is logged in
+        if not request.user.is_authenticated():
+            return Response({'detail':'User is not authenticated.'},
+                status=status.HTTP_401_UNAUTHORIZED)
+
+        form_meta_data_serializer = FormMetaDataSerializer(data=self.request.data)
+
+        if form_meta_data_serializer.is_valid():
+            form_meta_data_serializer.save()
+            return Response({
+                "detail": "Form data saved.",
+                "redirect_url": "some url for form_output"},
+                status=status.HTTP_201_CREATED)
+        else:
+            return Response(form_meta_data_serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST)
+
+        # try:
+        #     bg_img = request.FILES.get("bg_img")
+        #     logo_img = request.FILES.get("logo_img")
+        # except Exception as err:
+        #     return Response({'detail': f'Bad data.\nError: {err}'},
+        #         status=status.HTTP_400_BAD_REQUEST)
+
+        # form_meta_data_serializer = FormMetaDataSerializer(data={
+        #     'user': request.user,
+        #     'background_image': bg_img,
+        #     'logo_image': logo_image,
+        #     'specific_questions_json': request.data['specific_ques']
+        # })
 
 
 def index(request):
