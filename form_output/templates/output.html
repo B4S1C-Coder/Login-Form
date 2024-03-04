@@ -91,31 +91,27 @@
 </head>
 
 <body>
-  <div>
-    <div class="center-align">
-      <div class="row imageBox">
-        <img src={{header}} class="responsive-img col s12 l4 m8 offset-l4 offset-m3" />
-      </div>
+  <div class="center-align">
+    <div class="row imageBox">
+      <img src={{header}} class="responsive-img col s12 l4 m8 offset-l4 offset-m3" />
     </div>
+  </div>
 
-    <hr />
-
+  <hr />
     <div class="container">
       <h3>Student Registration Form</h3>
       <p>
         {{content}}
       </p>
-      <form class="col s12" id="dataForm" method="post" enctype="multipart/form-data">
+      <form class="col s12" id="dataForm" enctype="multipart/form-data" method="post">
         {%csrf_token%}
         <div class="row">
           {% for field in feilds %}
           <div class="input-field col s12">
-            <input name="{{ field }}" id="{{ field}}" type="text" class="validate" />
+            <input name="{{ field }}" id="{{field}}" type="text" class="validate" />
             <label for="{{ field }}">{{ field }}</label>
           </div>
           {% endfor %}
-
-
           <div class="input-field col s12">
             <select name="gender" id="gender">
               <option value="" disabled selected>Choose your gender</option>
@@ -141,12 +137,12 @@
         <div id="Thapar Student" class="category-form hide">
           <h5>Thapar Student</h5>
           <!-- <h5>Price for entry:- <b>Rs. 300/-</b></h5>
-        <img src="/qr.jpeg" /> -->
+          <img src="/qr.jpeg" /> -->
           <!-- Add specific fields and descriptions for Thapar Student here -->
           <div class="file-field input-field">
             <div class="btn">
               <span>Upload College ID</span>
-              <input type="file" id="studentIdUrl" name="image" id="image" accept="image/*" />
+              <input type="file" id="studentIdUrl" accept="image/*" />
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" />
@@ -162,7 +158,108 @@
           </div>
         </div>
 
+        <!-- Non Thapar Student Form -->
+        <div id="Non Thapar Student" class="category-form hide">
+          <h5>Non Thapar Student</h5>
+          <h5>Price for entry:- <b><br>5KM : Rs. 400/-
+              <br>10KM : Rs.600/-
+            </b>
 
+          </h5>
+          <img src="/qr.jpeg" />
+          <!-- Add specific fields and descriptions for Non Thapar Student here -->
+          <!-- <div class="input-field col s12">
+            <input name="clgName" id="clgName" type="text" class="validate" />
+            <label for="clgName"
+              >Are you a college student? (if yes, enter college name)</label
+            >
+          </div>
+          <div class="input-field col s12">
+            <input name="sclName" id="sclName" type="text" class="validate" />
+            <label for="sclName"
+              >Are you a school student? (if yes, enter school name)</label
+            >
+          </div> -->
+
+
+          <!-- Payment -->
+          <div class="row">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>Upload Payment Screenshot</span>
+                <input type="file" id="ssPaymentUrl" accept="image/*" />
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" />
+              </div>
+            </div>
+            <div class="progress hide" id="ssPaymentUrlProgress">
+              <div class="indeterminate"></div>
+            </div>
+            <div class="input-field col s12">
+              <input name="trnID" id="trnID" type="number" class="validate" />
+              <label for="trnID">Transaction ID</label>
+            </div>
+            <div class="input-field col s12">
+              <input name="trnPhone" id="trnPhone" type="tel" class="validate" />
+              <label for="trnPhone">Phone Number through which the Payment was made</label>
+            </div>
+            <div class="input-field col s12">
+              <select name="gateway" id="gateway">
+                <option value="" disabled selected>Choose your payment gateway
+                </option>
+                <option value="Paytm">Paytm</option>
+                <option value="Phonepe">Phonepe</option>
+                <option value="Gpay">Gpay</option>
+                <option value="Other">Other</option>
+              </select>
+              <label>Payment Gateway Used</label>
+            </div>
+
+            <!-- Payment -->
+
+
+
+          </div>
+        </div>
+
+        <!-- Not a Student Form -->
+        <!-- <div id="Not a Student" class="category-form hide">
+          <h5>Not a Student</h5>
+          <h5>Price for entry:- <b>Rs. 500/</b>-</h5>
+          <img src="/qr.jpeg" /> -->
+        <!-- Add specific fields and descriptions for Not a Student here -->
+        <!-- <div class="file-field input-field">
+            <div class="btn">
+              <span>Upload Government ID Proof</span>
+              <input type="file" id="govIdUrl" accept="image/*" />
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" />
+            </div>
+          </div>
+
+          <div class="progress hide" id="govIdUrlProgress">
+            <div class="indeterminate"></div>
+          </div>
+        </div> -->
+
+
+
+
+
+
+        <!-- Common fields for all categories -->
+        <div class="input-field col s12">
+          <select name="distance" id="distance">
+            <option value="" disabled selected>Choose your running distance
+            </option>
+            <option value="5km">5km</option>
+            <option value="10km">10km</option>
+          </select>
+          <label>Running Distance</label>
+        </div>
+        <!-- </div> -->
 
         <!-- Submit Button -->
         <button class="btn waves-effect waves-light" type="submit" name="action">
@@ -175,13 +272,9 @@
         <input id="govIdUrlLink" name="govIdUrl" type="text" class="hide" />
         <input id="ssPaymentUrlLink" name="ssPaymentUrl" type="text" class="hide" />
 
+
       </form>
-
     </div>
-
-
-
-
 
     <!-- Initialize Materialize CSS components -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -317,22 +410,11 @@
       };
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
+    <hr />
 
     <div class="center-align">
       <img src={{footer}} class="responsive-img" style="height: 45vh" />
     </div>
-
 
     <div id="error-modal" class="modal">
       <div class="modal-content">
@@ -354,104 +436,88 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
       </div>
     </div>
+    <script src="/static/assets/javascript/worker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-  </div>
-  <script src=/static/assets/javascript/worker.js></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <br>
-  <br>
-  <br>
-
-
-
-
-
-
-  <!-- Footer -->
-  <div class="">
-    <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-      <!-- Google Fonts -->
-      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-      <!-- Section: Social media -->
-      <section class="center-align">
-        <!-- Facebook -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" href="#!" role="button"><i
-            class="fab fa-facebook-f"></i></a>
-
-        <!-- Twitter -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #55acee;" href="#!" role="button"><i
-            class="fab fa-twitter"></i></a>
-
-        <!-- Google -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #dd4b39;" href="#!" role="button"><i
-            class="fab fa-google"></i></a>
-
-        <!-- Instagram -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button"><i
-            class="fab fa-instagram"></i></a>
-
-        <!-- Linkedin -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #0082ca;" href="#!" role="button"><i
-            class="fab fa-linkedin-in"></i></a>
-        <!-- Github -->
-        <a class="btn text-white btn-floating m-1" style="background-color: #333333;" href="#!" role="button"><i
-            class="fab fa-github"></i></a>
-      </section>
-      <!-- Section: Social media -->
-
-      <!-- Section: Links  -->
-      <section class="center-align">
-        <div class="container text-center text-md-start mt-5">
-          <!-- Grid row -->
-          <div class="row mt-3">
-            <!-- Grid column -->
-            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-              <!-- Content -->
-              <h6 class="text-uppercase fw-bold mb-4">
-                <i class="fas fa-gem me-3"></i>Company name
-              </h6>
-              <p>
-                Here you can use rows and columns to organize your footer content. Lorem ipsum
-                dolor sit amet, consectetur adipisicing elit.
-              </p>
+    
+    
+    <div class="">
+      <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <!-- Section: Social media -->
+        <section class="center-align">
+          <!-- Facebook -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" href="#!" role="button"><i
+              class="fab fa-facebook-f"></i></a>
+    
+          <!-- Twitter -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #55acee;" href="#!" role="button"><i
+              class="fab fa-twitter"></i></a>
+    
+          <!-- Google -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #dd4b39;" href="#!" role="button"><i
+              class="fab fa-google"></i></a>
+    
+          <!-- Instagram -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button"><i
+              class="fab fa-instagram"></i></a>
+    
+          <!-- Linkedin -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #0082ca;" href="#!" role="button"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Github -->
+          <a class="btn text-white btn-floating m-1" style="background-color: #333333;" href="#!" role="button"><i
+              class="fab fa-github"></i></a>
+        </section>
+        <!-- Section: Social media -->
+    
+        <!-- Section: Links  -->
+        <section class="center-align">
+          <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <!-- Content -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>Company name
+                </h6>
+                <p>
+                  Here you can use rows and columns to organize your footer content. Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit.
+                </p>
+              </div>
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                <p>
+                  <i class="fas fa-envelope me-3"></i>
+                  info@example.com
+                </p>
+                <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+              </div>
+              <!-- Grid column -->
             </div>
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-              <!-- Links -->
-              <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-              <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
-              <p>
-                <i class="fas fa-envelope me-3"></i>
-                info@example.com
-              </p>
-              <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-            </div>
-            <!-- Grid column -->
+            <!-- Grid row -->
           </div>
-          <!-- Grid row -->
-        </div>
-      </section>
-      <!-- Section: Links  -->
-
-      <!-- Copyright -->
-      <!-- <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-      </div> -->
-      <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-  </div>
-
-
-
-
+        </section>
+        <!-- Section: Links  -->
+    
+        <!-- Copyright -->
+        <!-- <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+          © 2021 Copyright:
+          <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div> -->
+        <!-- Copyright -->
+      </footer>
+      <!-- Footer -->
+    </div>
 
 
 
 </body>
-
-
-
 
 </html>

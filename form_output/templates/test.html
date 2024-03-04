@@ -1,50 +1,252 @@
-<div class="container">
-  <h3>Student Registration Form</h3>
-  <p>
-    {{content}}
-  </p>
-  <form class="col s12" id="dataForm"  method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    <div class="row">
-      {% for field in feilds %}
-      <div class="input-field col s12">
-        <input name="{{ field }}" id="{{ field}}" type="text" class="validate" />
-        <label for="{{ field }}">{{ field }}</label>
-      </div>
-      {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
 
-      <div class="input-field col s12">
-        <select name="gender" id="gender">
-          <option value="" disabled selected>Choose your gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <label>Gender</label>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register For Climathon</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-      <!-- Category Selection Dropdown -->
-      <div class="input-field col s12">
-        <select name="category" id="category">
-          <option value="" disabled selected>Choose your category</option>
-          <option value="Thapar Student">Thapar Student</option>
-          <option value="Non Thapar Student">Non Thapar Student</option>
-          <!-- <option value="Not a Student">Not a Student</option> -->
-        </select>
-        <label>Category</label>
-      </div>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-image: url({{bg_link}});
+      background-size: cover;
+      background-color: rgba(19, 19, 19, 0.6);
+      background-blend-mode: color;
+    }
+
+    * {
+      color: white;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* for mozilla */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .modal {
+      background-color: rgb(30, 30, 30);
+    }
+
+    .roboButton {
+      padding: 0.75em 2em;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 5px 20px rgba(192, 36, 0, 0.4),
+        0 2px 2px rgba(192, 36, 0, 0.4);
+      background-image: radial-gradient(100% 75% at 50% 100%,
+          #fed262 0%,
+          #c40900 100%);
+      border: none;
+      border-radius: 100px;
+      box-shadow: inset 0 3px 15px 0 rgba(174, 32, 0, 1),
+        inset 0 -3px 0 0 rgba(254, 210, 98, 1),
+        inset 0 40px 0 0 rgba(254, 210, 98, 0.4),
+        inset 0 20px 20px 0 rgba(248, 191, 69, 1), 0 0 0 8px #000,
+        0 9px 0 0 #444, 0 0 20px 0 rgba(254, 210, 98, 0.4),
+        0 40px 20px -30px rgba(254, 210, 98, 0.2);
+
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        background-image: radial-gradient(100% 75% at 50% 100%,
+            #f7b940 0%,
+            #a20700 100%);
+      }
+
+      &:focus,
+      &:active {
+        outline: none;
+        color: #f9e3bf;
+        background-image: radial-gradient(100% 75% at 50% 100%,
+            #f58725 0%,
+            #850600 100%);
+        box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.4),
+          inset 0 0 10px rgba(133, 6, 0, 1),
+          inset 0 3px 15px 0 rgba(174, 32, 0, 1),
+          inset 0 40px 0 0 rgba(254, 210, 98, 0.3),
+          inset 0 20px 20px 0 rgba(248, 191, 69, 0.75), 0 0 0 8px #000,
+          0 9px 0 0 #444;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center-align">
+    <div class="row imageBox">
+      <img src={{header}} class="responsive-img col s12 l4 m8 offset-l4 offset-m3" />
     </div>
+  </div>
 
-    <!-- Thapar Student Form -->
-    
+  <hr />
+  <div class="container">
+    <h3>Student Registration Form</h3>
+    <p>
+      {{content}}
+    </p>
+    <form class="col s12" id="dataForm" enctype="multipart/form-data" method="post">
+      {%csrf_token%}
+      <div class="row">
+        {% for field in feilds %}
+        <div class="input-field col s12">
+          <input name="{{ field }}" id="{{field}}" type="text" class="validate" />
+          <label for="{{ field }}">{{ field }}</label>
+        </div>
+        {% endfor %}
+        <div class="input-field col s12">
+          <select name="gender" id="gender">
+            <option value="" disabled selected>Choose your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <label>Gender</label>
+        </div>
+        
+      </div>
+       <!-- Submit Button -->
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        Submit
+        <i class="material-icons right">send</i>
+      </button>
 
-    <!-- Submit Button -->
-    <button class="btn waves-effect waves-light" type="submit" name="action">
-      Submit
-      <i class="material-icons right">send</i>
-    </button>
+    </form>
+  </div>
 
-  </form>
-</div>
-<div class="center-align">
-  <img src="static/assets/images/footer.png" class="responsive-img" style="height: 45vh" />
-</div>
+  <!-- Initialize Materialize CSS components -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      M.AutoInit();
+    });
+  </script>
+
+  <hr />
+
+  <div class="center-align">
+    <img src={{footer}} class="responsive-img" style="height: 45vh" />
+  </div>
+
+  <div id="error-modal" class="modal">
+    <div class="modal-content">
+      <h4>Error</h4>
+      <p id="error-message"></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
+
+  <!-- Add a modal for success messages -->
+  <div id="success-modal" class="modal">
+    <div class="modal-content">
+      <h4>Success</h4>
+      <p>Registered successfully.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
+  <script src="/static/assets/javascript/worker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+
+  <div class="">
+    <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+      <!-- Section: Social media -->
+      <section class="center-align">
+        <!-- Facebook -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" href="#!" role="button"><i
+            class="fab fa-facebook-f"></i></a>
+
+        <!-- Twitter -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #55acee;" href="#!" role="button"><i
+            class="fab fa-twitter"></i></a>
+
+        <!-- Google -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #dd4b39;" href="#!" role="button"><i
+            class="fab fa-google"></i></a>
+
+        <!-- Instagram -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button"><i
+            class="fab fa-instagram"></i></a>
+
+        <!-- Linkedin -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #0082ca;" href="#!" role="button"><i
+            class="fab fa-linkedin-in"></i></a>
+        <!-- Github -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #333333;" href="#!" role="button"><i
+            class="fab fa-github"></i></a>
+      </section>
+      <!-- Section: Social media -->
+
+      <!-- Section: Links  -->
+      <section class="center-align">
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                <i class="fas fa-gem me-3"></i>Company name
+              </h6>
+              <p>
+                Here you can use rows and columns to organize your footer content. Lorem ipsum
+                dolor sit amet, consectetur adipisicing elit.
+              </p>
+            </div>
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+              <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+              <p>
+                <i class="fas fa-envelope me-3"></i>
+                info@example.com
+              </p>
+              <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+        </div>
+      </section>
+      <!-- Section: Links  -->
+
+      <!-- Copyright -->
+      <!-- <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+          © 2021 Copyright:
+          <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div> -->
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+  </div>
+
+
+
+</body>
+
+</html>
