@@ -1,0 +1,28 @@
+hello
+
+<form class="col s12" id="dataForm" enctype="multipart/form-data" method="post" >
+    {%csrf_token%}
+    <div class="row">
+      {% for field,Entries in fieldData %}
+      <div class="input-field col s12">
+        <input name="{{Entries}}" type="text" class="validate" />
+        <label for="{{Entries}}">{{field}}</label>
+      </div>
+      {% endfor %}
+      <div class="input-field col s12">
+        <select name="gender" id="gender">
+          <option value="" disabled selected>Choose your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <label>Gender</label>
+      </div>
+
+    </div>
+    <!-- Submit Button -->
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Submit
+      <i class="material-icons right">send</i>
+    </button>
+
+  </form>
