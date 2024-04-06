@@ -1,25 +1,33 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 
-# Suggestion: Maybe create a config.py file for this app and store BRANCH_CHOICES
-# there. This is to increase readability as number of branches increases. Also it
-# might be better and possibly more efficient to NOT HAVE BRANCH_CHOICES as an
-# attribute of the Form class.
-class Form(models.Model):
-    BRANCH_CHOICES = [('COE','Computer Engineering'),
+class ApplicationForm(models.Model):    
+    form_creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    form_name = models.CharField("form_name", max_length=50)
+    form_bkg_img = models.ImageField(upload_to="form_bg_images/",
+                        blank=True, null=True)
+    form_logo_img = models.ImageField(upload_to="form_logo_images/",
+                        null=True, blank=True)
+    form_specific_questions = models.JSONField('specific_questions')
+
+class FormApplicant(models.Model):
+    BRANCH_CHOICES = [
+        ('COE', 'Computer Engineering'),
         ('CSE', 'Computer Science and Engineering'),
         ('ECE', 'Electronics and Communication Engineering'),
-        ('ME', 'Mechanical Engineering'),
+        ('EEC', 'Electrical and Computer Engineering'),
+        ('ENC', 'Electronics and Computer Engineering'),
+        ('ME', 'Mechanical Engineering')
     ]
-    name=models.CharField(max_length=100)
-    rollno=models.IntegerField(default=0)
-    branch=models.CharField(max_length=50,choices=BRANCH_CHOICES,default="CSE")
-    image=models.ImageField(upload_to='images/',blank=True)
 
-class FormMetaData(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    background_image = models.ImageField(upload_to='bg_images/', null=True,
-                    blank=True)
-    logo_image = models.ImageField(upload_to='logo_images/', null=True,
-                    blank=True)
-    specific_questions_json = models.JSONField('specific_questions')
+    associated_form = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+    applicant_name = models.CharField("applicant_name", max_length=50)
+    applicant_rollno = models.IntegerField("applicant_rollno",
+                        validators=[MinValueValidator(1)])
+    applicant_branch = models.CharField("applicant_branch", max_length=50,
+                        choices=BRANCH_CHOICES, default="EEC")
+    applicant_email = models.EmailField("applicant_email")
+    applicant_photo = models.ImageField(upload_to="applicant_photos/",
+                        blank=True, null=True)
+

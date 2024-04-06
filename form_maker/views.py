@@ -1,75 +1,51 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Django REST imports
-from rest_framework.views import APIView
-from rest_framework import permissions
-from rest_framework import status
-from rest_framework.response import Response
-from knox.auth import TokenAuthentication
+from .models import ApplicationForm
+from .forms import ApplicationFormForm
+from .form_maker_config import (
+    DASHBOARD_SUCCESS_REDIRECT, DASHBOARD_FAILURE_REDIRECT
+)
 
-from .serializers import FormMetaDataSerializer
-from .models import FormMetaData
-
-class FormMakerInterfaceView(LoginRequiredMixin, View):
+class DashboardView(View, LoginRequiredMixin):
     def get(self, request):
-        return render(request=request, template_name="form_maker/dashboard.html")
+        create_form = ApplicationFormForm()
 
-# MEANT TO BE USED BY THE FRONTEND ONLY
-class InterfaceFormCreationDataAPIView(APIView):
+        user_forms = ApplicationForm.objects.filter(form_creator__id=request.user.id)
+
+        if len(user_forms) == 0:
+            user_forms = ["You don't have any forms yet."]
+
+        return render(request=request, template_name="form_maker/dashboard.html",
+                context={
+                    "create_form": create_form,
+                    "user_forms": user_forms,
+                })
 
     def post(self, request):
-        # check if user is logged in
-        if not request.user.is_authenticated():
-            return Response({'detail':'User is not authenticated.'},
-                status=status.HTTP_401_UNAUTHORIZED)
-
-        form_meta_data_serializer = FormMetaDataSerializer(data=self.request.data)
-
-        if form_meta_data_serializer.is_valid():
-            form_meta_data_serializer.save()
-            return Response({
-                "detail": "Form data saved.",
-                "redirect_url": "some url for form_output"},
-                status=status.HTTP_201_CREATED)
-        else:
-            return Response(form_meta_data_serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST)
-
-        # try:
-        #     bg_img = request.FILES.get("bg_img")
-        #     logo_img = request.FILES.get("logo_img")
-        # except Exception as err:
-        #     return Response({'detail': f'Bad data.\nError: {err}'},
-        #         status=status.HTTP_400_BAD_REQUEST)
-
-        # form_meta_data_serializer = FormMetaDataSerializer(data={
-        #     'user': request.user,
-        #     'background_image': bg_img,
-        #     'logo_image': logo_image,
-        #     'specific_questions_json': request.data['specific_ques']
-        # })
+        # data = request.POST
+        # data["form_creator"] = request.user
+        create_form = ApplicationFormForm(request.POST)
 
 
-def index(request):
-    if  request.method == 'POST':
-        data=request.POST
+        if create_form.is_valid():
+            # preprocess specific questions json if needed
+            application_form = create_form.save(form_creator=request.user)
+            messages.success(request, "Form created successfully.")
+            return redirect(DASHBOARD_SUCCESS_REDIRECT)
 
-        name = data.get('name')
-        email = data.get('email')
-        age = data.get('age')
-        phone = data.get('phone')
-        gender = data.get('gender')
+        user_forms = ApplicationForm.objects.filter(form_creator__id=request.user.id)
 
-        # Name=data.get('name')
-        # Rollno=data.get('rollno')
-        # Branch=data.get( 'branch')
-        # image=request.FILES.get('image')
-        # print(Name)
-        # print(Rollno)
-        # print(Branch)
-        # print(image)
-        # return redirect('/')
-    return render(request,"index.html")
+        if len(user_forms) == 0:
+            user_forms = ["You don't have any forms yet."]
+
+        messages.error(request, f"Couldn't create form.\n{create_form.errors.items}")
+        # return redirect(DASHBOARD_FAILURE_REDIRECT)
+        return render(request=request, template_name="form_maker/dashboard.html",
+                context={
+                    "create_form": create_form,
+                    "user_forms": user_forms,
+                })
+

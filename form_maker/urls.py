@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import DashboardView
+
+app_name = "form_maker"
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('dashboard/', views.FormMakerInterfaceView.as_view(), name="dashboard"),
-    path('submitformdata/', views.InterfaceFormCreationDataAPIView.as_view(), name="submitformdata")
+    path("dashboard/", DashboardView.as_view(), name="dashboard"),
 ]

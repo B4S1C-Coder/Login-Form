@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate a Form! - Join Us</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% if user_creation_form.errors %}
+  		<ul>
+    		{% for key,value in user_creation_form.errors.items %} 
+      			<li>{{ key|escape }} : {{ value|escape }}</li>
+    		{% endfor %}
+		</ul>
+	{% endif %}
+    <form autocomplete="off" method="POST">
+		{% csrf_token %}
+		{{ user_creation_form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Create</button>
+	</form>
+</body>
+</html>

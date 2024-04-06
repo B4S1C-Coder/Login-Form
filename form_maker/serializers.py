@@ -1,10 +1,12 @@
 from rest_framework import serializers
-from .models import FormMetaData
+from .models import ApplicationForm
 
-# class HTMLContentSerializer(serializers.Serializer):
-#     content = serializers.CharField()
-
-class FormMetaDataSerializer(serializers.ModelSerializer):
+class ApplicationFormSerializers(serializers.ModelSerializer):
     class Meta:
-        model = FormMetaData
-        fields = ['user', 'background_image', 'logo_image', 'specific_questions_json']
+        model = ApplicationForm
+        fields = [
+            "form_creator",
+            "form_bkg_img",
+            "form_logo_img",
+            "form_specific_questions",
+        ]

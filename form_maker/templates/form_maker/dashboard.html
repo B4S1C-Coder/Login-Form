@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate a Form!</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    <h1>Your forms:</h1>
+    <ul>
+        {% for user_form in user_forms %}
+            <li><p>{{ user_form.form_name }}   <a href="#">Edit</a></p></li>
+        {% endfor %}
+    </ul>
+    <form autocomplete="off" method="POST">
+		{% csrf_token %}
+		{{ create_form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Create</button>
+        <a href="{% url 'users:logout' %}">Logout</a>
+	</form>
+    {% if create_form.errors %}
+  		<ul>
+    		{% for key,value in create_form.errors.items %} 
+      			<li>{{ key|escape }} : {{ value|escape }}</li>
+    		{% endfor %}
+		</ul>
+	{% endif %}
+</body>
+</html>
