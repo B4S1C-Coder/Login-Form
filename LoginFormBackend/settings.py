@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 EXTERNAL_APPS=[
     'form_maker',
+    'users',
     'user_management',
     'api_form_maker',
     'form_output',

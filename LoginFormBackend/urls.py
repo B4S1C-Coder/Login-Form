@@ -19,6 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('form_maker.urls')),
-    path('api_form_maker/', include('api_form_maker.urls')),
+    path('users/', include('users.urls')),
+    # Will be included when made compatible with new form_maker
+    # path('api_form_maker/', include('api_form_maker.urls')),
     path('form_output/',include('form_output.urls')),
 ]
