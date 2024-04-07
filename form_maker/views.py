@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -22,13 +23,11 @@ class DashboardView(View, LoginRequiredMixin):
                 context={
                     "create_form": create_form,
                     "user_forms": user_forms,
+                    "username": request.user.username,
                 })
 
     def post(self, request):
-        # data = request.POST
-        # data["form_creator"] = request.user
-        create_form = ApplicationFormForm(request.POST)
-
+        create_form = ApplicationFormForm(request.POST, request.FILES)
 
         if create_form.is_valid():
             # preprocess specific questions json if needed
@@ -47,5 +46,44 @@ class DashboardView(View, LoginRequiredMixin):
                 context={
                     "create_form": create_form,
                     "user_forms": user_forms,
+                    "username": request.user.username,
                 })
 
+class EditFormView(View, LoginRequiredMixin):
+    def get(self, request, id):
+        application_form = ApplicationForm.objects.filter(id=id).first()
+
+        if application_form:
+
+            if application_form.form_creator != request.user:
+                return HttpResponse("Access denied.")
+
+            create_form = ApplicationFormForm(instance=application_form)
+            return render(request=request, template_name="form_maker/editform.html",
+                    context={
+                        "create_form": create_form,
+                        "formname": application_form.form_name,
+                    })
+
+        else:
+            messages.error(request, "Requested form was not found.")
+            return redirect(DASHBOARD_FAILURE_REDIRECT)
+
+    def post(self, request, id):
+        application_form = ApplicationForm.objects.filter(id=id).first()
+
+        if application_form:
+
+            if application_form.form_creator != request.user:
+                return HttpResponse("Access denied.")
+
+            create_form = ApplicationFormForm(request.POST, request.FILES, instance=application_form)
+
+            if create_form.is_valid():
+                create_form.save(form_creator=request.user)
+                messages.success(request, f"Form '{application_form.form_name}' updated successfully. ")
+                return redirect(DASHBOARD_SUCCESS_REDIRECT)
+
+        else:
+            messages.error(request, "Requested form was not found.")
+            return redirect(DASHBOARD_FAILURE_REDIRECT)

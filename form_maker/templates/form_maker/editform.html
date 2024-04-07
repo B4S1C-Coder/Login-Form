@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Form</title>
+</head>
+<body>
+    <h1>Edit {{ formname }}</h1>
+    <form autocomplete="off" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ create_form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Update</button>
+        <a href="{% url 'form_maker:dashboard' %}">Cancel</a>
+	</form>
+    {% if create_form.errors %}
+  		<ul>
+    		{% for key,value in create_form.errors.items %} 
+      			<li>{{ key|escape }} : {{ value|escape }}</li>
+    		{% endfor %}
+		</ul>
+	{% endif %}
+</body>
+</html>

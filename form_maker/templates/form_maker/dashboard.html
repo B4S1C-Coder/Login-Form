@@ -11,13 +11,14 @@
             {{ message }}
         {% endfor %}
     {% endif %}
-    <h1>Your forms:</h1>
+    <h1>Welcome, {{ username }}</h1>
+    <h2>Your forms:</h2>
     <ul>
         {% for user_form in user_forms %}
-            <li><p>{{ user_form.form_name }}   <a href="#">Edit</a></p></li>
+            <li><p>{{ user_form.form_name }}   <a href="{% url 'form_maker:editform' id=user_form.id %}">Edit</a></p></li>
         {% endfor %}
     </ul>
-    <form autocomplete="off" method="POST">
+    <form autocomplete="off" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ create_form.as_p }}
 		<button class="link-btn-filled-div" type="submit">Create</button>

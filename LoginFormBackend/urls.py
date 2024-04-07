@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,3 +26,8 @@ urlpatterns = [
     # path('api_form_maker/', include('api_form_maker.urls')),
     path('form_output/',include('form_output.urls')),
 ]
+
+# PROBLEM: This exposes all the stored media, so if anyone knows the filename they can easily
+# access the files here. This is here as a temporary solution to allow users to view their
+# previously uploaded media. A dedicated route has to be implemented and the below must be removed.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
