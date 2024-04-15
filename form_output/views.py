@@ -1,6 +1,7 @@
 
 from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
+from django.contrib.auth import authenticate ,login ,logout
 # Create your views here.
 def output(request):
     
@@ -10,6 +11,7 @@ def output(request):
     formtitle="form title"
     content="this the content that will be displayed"
     fields=["Name","Age","Email","Phone","Rollno"]
+    socials=["facebook","twitter","instagram","github"]
     
     if request.method=='post':
         return redirect('/form_output')
@@ -17,6 +19,12 @@ def output(request):
         
     # querryset=form_maker.Form.objects.all()
     # context={'feilds':querryset}
+    social_platforms = [
+        {'name': 'facebook', 'icon': 'fab fa-facebook-f'},
+        {'name': 'github', 'icon': 'fab fa-github-f'},
+        {'name': 'twitter', 'icon': 'fab fa-linkedin-f'},
+        {'name': 'instagram', 'icon': 'fab fa-instagram-f'},
+    ]
     context={
         'fields':fields,
         'content':content,
@@ -24,11 +32,10 @@ def output(request):
         "footer":footer,
         "header":header,
         "formtitle":formtitle,
+        "social_platforms":social_platforms
     }
-   
     
-    return render(request,'test.html',context)
-
+    return render(request,'output.html',context)
 
 def submit(request):
     actionUrl="https://docs.google.com/forms/u/0/d/e/1FAIpQLSezmeDQOdNZppr32soj43C1-5jJfxfTkPfemwJyhH2Kq78pJw/formResponse"
