@@ -5,7 +5,7 @@ Django==5.0.7
 django-cors-headers==4.3.1
 django-rest-knox==4.2.0
 djangorestframework==3.15.2
-pillow==10.2.0
+pillow==10.3.0
 pycparser==2.21
 pytz==2024.1
 sqlparse==0.5.0
